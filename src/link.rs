@@ -13,7 +13,7 @@ pub fn launch_rofi(items: &Items) -> anyhow::Result<String> {
     let names = items.get_names();
 
     let mut child = Command::new("rofi")
-        .args(&["-dmenu", "-i", "-theme", "~/dotfiles/rofi/quick-links"])
+        .args(["-dmenu", "-i", "-theme", "~/dotfiles/rofi/quick-links"])
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .spawn()?;
