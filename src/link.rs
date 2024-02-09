@@ -9,7 +9,7 @@ pub fn item_to_command(item: &Item) -> String {
     format!("i3-msg workspace number 1 && firefox \"{}\"", item.link)
 }
 
-pub fn launch_rofi(items: &Items) -> anyhow::Result<String> {
+pub fn launch_rofi(items: &Items) -> anyhow::Result<Option<String>> {
     let names = items.get_names();
 
     let mut child = Command::new("rofi")
@@ -31,10 +31,10 @@ pub fn launch_rofi(items: &Items) -> anyhow::Result<String> {
         if output_string.trim().is_empty() {
             Err(anyhow!("Empty selection"))
         } else {
-            Ok(String::from(output_string))
+            Ok(Some(String::from(output_string)))
         }
     } else {
-        Err(anyhow!("Rofi failed"))
+        Ok(None)
     }
 }
 

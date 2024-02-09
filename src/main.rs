@@ -7,6 +7,8 @@ fn main() -> anyhow::Result<()> {
     let file = "input.txt";
     let items = Items::try_from(file)?;
     let chosen = launch_rofi(&items)?;
-    launch_link(&chosen, &items)?;
-    Ok(())
+    match chosen {
+        None => Ok(()),
+        Some(s) => launch_link(&s, &items),
+    }
 }
