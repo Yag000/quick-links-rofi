@@ -39,7 +39,6 @@ pub fn launch_rofi(items: &Items) -> anyhow::Result<String> {
 }
 
 pub fn launch_link(s: &str, items: &Items) -> anyhow::Result<()> {
-    print!("{s}");
     let command = Command::new("i3-msg")
         .args(["workspace", "number", "1"])
         .output()?;
