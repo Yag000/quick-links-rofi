@@ -7,6 +7,8 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.79"
+clap = "4.5.0"
+clap_derive = "4.5.0"
 home = "0.5.9"
 serde = { version = "1.0.196", features = ["derive"] }
 serde_derive = "1.0.196"
