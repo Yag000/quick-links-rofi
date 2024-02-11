@@ -1,3 +1,4 @@
+use crate::config::Config;
 use crate::input::Item;
 use crate::input::Items;
 use anyhow::anyhow;
@@ -9,11 +10,11 @@ pub fn item_to_command(item: &Item) -> String {
     format!("i3-msg workspace number 1 && firefox \"{}\"", item.link)
 }
 
-pub fn launch_rofi(items: &Items) -> anyhow::Result<Option<String>> {
+pub fn launch_rofi(items: &Items, config: &Config) -> anyhow::Result<Option<String>> {
     let names = items.get_names();
 
     let mut child = Command::new("rofi")
-        .args(["-dmenu", "-i", "-theme", "~/dotfiles/rofi/quick-links"])
+        .args(["-dmenu", "-i", "-theme", config.theme.as_str()])
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .spawn()?;
@@ -38,14 +39,20 @@ pub fn launch_rofi(items: &Items) -> anyhow::Result<Option<String>> {
     }
 }
 
-pub fn launch_link(s: &str, items: &Items) -> anyhow::Result<()> {
+pub fn launch_link(s: &str, items: &Items, config: &Config) -> anyhow::Result<()> {
     let command = Command::new("i3-msg")
-        .args(["workspace", "number", "1"])
+        .args([
+            "workspace",
+            "number",
+            config.workspace_number.to_string().as_str(),
+        ])
         .output()?;
 
     if command.status.success() {
         let link = items.get_link(s.trim()).ok_or(anyhow!("Invalid item"))?;
-        Command::new("firefox").args([link]).output()?;
+        Command::new(config.browser_command_name.as_str())
+            .args([link])
+            .output()?;
         Ok(())
     } else {
         Err(anyhow!("i3-msg failed"))
