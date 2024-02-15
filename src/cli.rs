@@ -26,18 +26,17 @@ impl Cli {
             config.input_file = input_file;
         }
         if let Some(theme_path) = self.theme_path {
-            config.theme = theme_path
+            config.theme = theme_path;
         }
         if let Some(separator) = self.separator {
-            config.separator = separator
+            config.separator = separator;
         }
 
         if let Some(browser) = self.browser {
-            config.browser_command_name = browser
+            config.browser_command_name = browser;
         }
-
         if let Some(workspace) = self.workspace {
-            config.workspace_number = workspace
+            config.workspace_number = workspace;
         }
 
         config
