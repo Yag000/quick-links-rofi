@@ -166,4 +166,4 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## Contact
 
-For any issues or questions, please open an issue on the GitHub repository or contact the maintainer at `quick-links-rofi@yagoiglesias.fr`
+For any issues or questions, please open an issue on the GitHub repository or contact the maintainer at <quick-links-rofi@yagoiglesias.fr>

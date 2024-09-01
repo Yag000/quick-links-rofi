@@ -2,6 +2,15 @@
 name = "quick-links-rofi"
 version = "0.1.0"
 edition = "2021"
+authors = ["Yago Iglesias Vazquez  <uick-links-rofi@yagoiglesias.f>"]
+description = "A rust program to launch a rofi menu with a bunch of links"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/Yag000/quick-links-rofi"
+repository = "https://github.com/Yag000/quick-links-rofi"
+documentation = "https://github.com/Yag000/quick-links-rofi"
+keywords = ["Rofi"]
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
