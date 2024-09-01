@@ -1,13 +1,52 @@
 use crate::config::Config;
-use crate::input::Item;
+use crate::config::I3Switcher;
+use crate::config::WorkspaceSwitcher;
 use crate::input::Items;
 use anyhow::anyhow;
 use std::io::Write;
 use std::process::Command;
+use std::process::Output;
 use std::process::Stdio;
 
-pub fn item_to_command(item: &Item) -> String {
-    format!("i3-msg workspace number 1 && firefox \"{}\"", item.link)
+pub trait ExecSwitcher {
+    fn exec(&self) -> Option<Result<Output, std::io::Error>>;
+}
+
+impl ExecSwitcher for WorkspaceSwitcher {
+    fn exec(&self) -> Option<Result<Output, std::io::Error>> {
+        if let Some(command) = &self.custom {
+            command.exec()
+        } else if let Some(i3_swicth) = &self.i3 {
+            println!("Yeag");
+            i3_swicth.exec()
+        } else {
+            None
+        }
+    }
+}
+
+impl ExecSwitcher for String {
+    fn exec(&self) -> Option<Result<Output, std::io::Error>> {
+        let values: Vec<String> = self.split(" ").map(|s| s.to_string()).collect();
+        let comm = Command::new(values.first()?)
+            .args(values[1..].iter())
+            .output();
+        Some(comm)
+    }
+}
+
+impl ExecSwitcher for I3Switcher {
+    fn exec(&self) -> Option<Result<Output, std::io::Error>> {
+        Some(
+            Command::new("i3-msg")
+                .args([
+                    "workspace",
+                    "number",
+                    self.workspace_number.to_string().as_str(),
+                ])
+                .output(),
+        )
+    }
 }
 
 pub fn launch_rofi(items: &Items, config: &Config) -> anyhow::Result<Option<String>> {
@@ -40,21 +79,19 @@ pub fn launch_rofi(items: &Items, config: &Config) -> anyhow::Result<Option<Stri
 }
 
 pub fn launch_link(s: &str, items: &Items, config: &Config) -> anyhow::Result<()> {
-    let command = Command::new("i3-msg")
-        .args([
-            "workspace",
-            "number",
-            config.workspace_number.to_string().as_str(),
-        ])
+    if let Some(switcher) = &config.workspace_switcher {
+        println!("yep");
+        if let Some(output) = switcher.exec() {
+            if !output?.status.success() {
+                return Err(anyhow!("i3-msg failed"));
+            }
+        }
+    }
+
+    let link = items.get_link(s.trim()).ok_or(anyhow!("Invalid item"))?;
+    Command::new(config.browser_command_name.as_str())
+        .args([link])
         .output()?;
 
-    if command.status.success() {
-        let link = items.get_link(s.trim()).ok_or(anyhow!("Invalid item"))?;
-        Command::new(config.browser_command_name.as_str())
-            .args([link])
-            .output()?;
-        Ok(())
-    } else {
-        Err(anyhow!("i3-msg failed"))
-    }
+    Ok(())
 }

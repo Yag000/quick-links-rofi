@@ -1,6 +1,6 @@
 use clap_derive::Parser;
 
-use crate::config::Config;
+use crate::config::{Config, I3Switcher};
 
 #[derive(Parser)]
 pub struct Cli {
@@ -16,8 +16,8 @@ pub struct Cli {
     #[clap(short, long)]
     pub browser: Option<String>,
 
-    #[clap(short, long)]
-    pub workspace: Option<u8>,
+    #[clap(long)]
+    pub i3: Option<u8>,
 }
 
 impl Cli {
@@ -35,8 +35,9 @@ impl Cli {
         if let Some(browser) = self.browser {
             config.browser_command_name = browser;
         }
-        if let Some(workspace) = self.workspace {
-            config.workspace_number = workspace;
+
+        if let Some(workspace_number) = self.i3 {
+            config.workspace_switcher = Some(I3Switcher::new(workspace_number).into())
         }
 
         config

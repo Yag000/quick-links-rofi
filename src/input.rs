@@ -40,7 +40,7 @@ impl TryFrom<&str> for Items {
 
 impl Items {
     pub fn get_link(&self, s: &str) -> Option<String> {
-        self.values.get(s).map(String::clone)
+        self.values.get(s).cloned()
     }
 
     pub fn get_names(&self) -> String {

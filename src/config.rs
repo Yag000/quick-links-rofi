@@ -10,8 +10,53 @@ pub struct Config {
     pub input_file: String,
     pub theme: String,
     pub separator: char,
-    pub workspace_number: u8,
     pub browser_command_name: String,
+    pub workspace_switcher: Option<WorkspaceSwitcher>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct WorkspaceSwitcher {
+    pub custom: Option<String>,
+    pub i3: Option<I3Switcher>,
+}
+
+impl From<I3Switcher> for WorkspaceSwitcher {
+    fn from(value: I3Switcher) -> Self {
+        WorkspaceSwitcher {
+            custom: None,
+            i3: Some(value),
+        }
+    }
+}
+
+impl From<String> for WorkspaceSwitcher {
+    fn from(value: String) -> Self {
+        WorkspaceSwitcher {
+            custom: Some(value),
+            i3: None,
+        }
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct I3Switcher {
+    pub workspace_number: u8,
+}
+
+impl Default for I3Switcher {
+    fn default() -> Self {
+        I3Switcher {
+            workspace_number: 1,
+        }
+    }
+}
+
+impl I3Switcher {
+    pub fn new(number: u8) -> Self {
+        Self {
+            workspace_number: number,
+        }
+    }
 }
 
 impl Default for Config {
@@ -27,8 +72,8 @@ impl Default for Config {
                 home::home_dir().unwrap().to_str().unwrap()
             ),
             separator: ',',
-            workspace_number: 1,
             browser_command_name: String::from("firefox"),
+            workspace_switcher: Some(I3Switcher::default().into()),
         }
     }
 }
