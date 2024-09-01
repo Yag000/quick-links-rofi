@@ -6,6 +6,12 @@
 This menu allows you to quickly select and open a URL in your preferred browser. It’s particularly useful for users
 of tiling window managers like i3, offering a streamlined way to access frequently used links without disrupting your workflow.
 
+
+This is a example of what con be achieved witht his tool :
+![Example](./docs/example.png)
+
+The config files are available at: https://github.com/Yag000/dotfiles/tree/master/quick-links 
+
 ## Features
 
 - **Custom Input File**: Define your list of links and their descriptions using a simple text file.
