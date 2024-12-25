@@ -18,7 +18,7 @@ keywords = ["Rofi"]
 anyhow = "1.0.79"
 clap = "4.5.23"
 clap_derive = "4.5.18"
-home = "0.5.9"
+home = "0.5.11"
 serde = { version = "1.0.216", features = ["derive"] }
 serde_derive = "1.0.196"
 serde_yaml = "0.9.34"
