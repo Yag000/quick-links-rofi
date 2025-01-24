@@ -17,7 +17,6 @@ impl ExecSwitcher for WorkspaceSwitcher {
         if let Some(command) = &self.custom {
             command.exec()
         } else if let Some(i3_swicth) = &self.i3 {
-            println!("Yeag");
             i3_swicth.exec()
         } else {
             None
@@ -80,7 +79,6 @@ pub fn launch_rofi(items: &Items, config: &Config) -> anyhow::Result<Option<Stri
 
 pub fn launch_link(s: &str, items: &Items, config: &Config) -> anyhow::Result<()> {
     if let Some(switcher) = &config.workspace_switcher {
-        println!("yep");
         if let Some(output) = switcher.exec() {
             if !output?.status.success() {
                 return Err(anyhow!("i3-msg failed"));
