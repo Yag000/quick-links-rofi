@@ -87,6 +87,12 @@ fn save_yml_config(config: &Config, path: &str) -> anyhow::Result<()> {
     Ok(())
 }
 
+fn save_default_config(config_path: &str) -> anyhow::Result<Config> {
+    let config = Config::default();
+    save_yml_config(&config, config_path)?;
+    Ok(config)
+}
+
 pub fn get_configuration() -> anyhow::Result<Config> {
     let config_folder = format!(
         "{}/.config/quick-links",
@@ -101,15 +107,11 @@ pub fn get_configuration() -> anyhow::Result<Config> {
         let mut string_value = String::new();
         file.read_to_string(&mut string_value)?;
         if string_value.is_empty() {
-            let config = Config::default();
-            save_yml_config(&config, config_path.as_str())?;
-            Ok(config)
+            save_default_config(config_path.as_str())
         } else {
             Ok(serde_yaml::from_str(&string_value)?)
         }
     } else {
-        let config = Config::default();
-        save_yml_config(&config, config_path.as_str())?;
-        Ok(config)
+        save_default_config(config_path.as_str())
     }
 }
