@@ -10,6 +10,10 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+
+    # Avoid running twice the action if it's triggered by a push on a PR from a branch on the repo.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -25,7 +29,12 @@ jobs:
 
   fmt:
     name: Rustfmt
-    runs-on: ubuntu-latest
+    runs-on:
+      ubuntu-latest
+
+      # Avoid running twice the action if it's triggered by a push on a PR from a branch on the repo.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
@@ -37,6 +46,10 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+
+    # Avoid running twice the action if it's triggered by a push on a PR from a branch on the repo.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
