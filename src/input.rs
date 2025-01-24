@@ -31,6 +31,9 @@ impl TryFrom<&str> for Items {
     fn try_from(path: &str) -> Result<Self, Self::Error> {
         let mut values = HashMap::new();
         for line in std::fs::read_to_string(path)?.lines() {
+            if line.is_empty() {
+                continue;
+            }
             let item = Item::try_from(line)?;
             values.insert(item.key, item.link);
         }
