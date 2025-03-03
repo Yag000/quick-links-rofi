@@ -1,6 +1,6 @@
 [package]
 name = "quick-links-rofi"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["Yago Iglesias Vazquez  <uick-links-rofi@yagoiglesias.f>"]
 description = "A rust program to launch a rofi menu with a bunch of links"
