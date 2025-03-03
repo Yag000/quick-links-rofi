@@ -62,15 +62,8 @@ impl I3Switcher {
 impl Default for Config {
     fn default() -> Self {
         Self {
-            input_file: format!(
-                "{}/.config/quick-links/links.txt",
-                home::home_dir().unwrap().to_str().unwrap()
-            ),
-
-            theme: format!(
-                "{}/.config/quick-links/theme.rasi",
-                home::home_dir().unwrap().to_str().unwrap()
-            ),
+            input_file: format!("{}/links.txt", config_folder_path()),
+            theme: format!("{}/theme.rasi", config_folder_path()),
             separator: ',',
             browser_command_name: String::from("firefox"),
             workspace_switcher: Some(I3Switcher::default().into()),
@@ -94,14 +87,9 @@ fn save_default_config(config_path: &str) -> anyhow::Result<Config> {
 }
 
 pub fn get_configuration() -> anyhow::Result<Config> {
-    let config_folder = format!(
-        "{}/.config/quick-links",
-        home::home_dir().unwrap().to_str().unwrap()
-    );
+    let config_path = format!("{}/config.yml", config_folder_path());
 
-    let config_path = format!("{config_folder}/config.yml");
-
-    create_dir_all(config_folder)?;
+    create_dir_all(config_folder_path())?;
 
     if let Ok(mut file) = File::open(config_path.clone()) {
         let mut string_value = String::new();
@@ -114,4 +102,11 @@ pub fn get_configuration() -> anyhow::Result<Config> {
     } else {
         save_default_config(config_path.as_str())
     }
+}
+
+fn config_folder_path() -> String {
+    format!(
+        "{}/.config/quick-links",
+        home::home_dir().unwrap().to_str().unwrap()
+    )
 }
