@@ -6,11 +6,10 @@
 This menu allows you to quickly select and open a URL in your preferred browser. It’s particularly useful for users
 of tiling window managers like i3, offering a streamlined way to access frequently used links without disrupting your workflow.
 
-
 This is a example of what con be achieved witht his tool :
 ![Example](./docs/example.png)
 
-The config files are available at: https://github.com/Yag000/dotfiles/tree/master/quick-links 
+The config files are available at: <https://github.com/Yag000/dotfiles/tree/master/quick-links>
 
 ## Features
 
@@ -18,7 +17,7 @@ The config files are available at: https://github.com/Yag000/dotfiles/tree/maste
 - **Customizable Appearance**: Apply your own Rofi theme using a theme path.
 - **Custom Separators**: Use any character as a separator between link names and URLs.
 - **Browser Choice**: Select your preferred web browser to open links.
-- **i3 Integration**: Optional i3 window manager support for better workflow integration.
+- **Workspace switching**: Optional window manager support for better workflow integration, in particular i3 is built-in.
 - **Configuration File Support**: Manage settings through a configuration file for a more persistent setup.
 
 ## Usage
@@ -72,7 +71,7 @@ browser_command_name: firefox
 - `input_file`: The path to your input file containing the links.
 - `theme`: The path to your custom Rofi theme.
 - `separator`: The character used as a separator between the link description and URL in your input file.
-- `workspace_switcher`: i3-specific settings to define which workspace the browser should open in.
+- `workspace_switcher`: settings to define which workspace the browser should open in.
   - `custom`: A custom command to call just before opening the URL.
   - `i3.workspace_number`: The workspace number where the browser should be opened.
 - `browser_command_name`: The command to launch your preferred browser.
@@ -88,7 +87,7 @@ The input file should be a plain text file where each line represents a link. Ea
 ### Example
 
 ```plaintext
-GitHub,https://github.com
+ GitHub,https://github.com
 Google,https://www.google.com
 Stack Overflow,https://stackoverflow.com
 ```
@@ -114,10 +113,10 @@ This command applies the custom theme located at `~/.config/rofi/mytheme.rasi`.
 ### Using a Custom Separator
 
 ```bash
-quick-links-rofi -i links.txt -s ","
+quick-links-rofi -i links.txt -s "|"
 ```
 
-This command uses a comma as the separator in the input file.
+This command uses a vertical bar as the separator in the input file.
 
 ### Specifying a Browser
 
@@ -150,7 +149,7 @@ cargo install quick-links-rofi
 
 ### Manual
 
-The above method is recommended, but if you want to install it manually, you can do it like this:
+The above method is recommended, but if you want to install it manually using cargo, you can do it like this:
 
 ```bash
 git clone git@github.com:Yag000/quick-links-rofi.git
