@@ -78,6 +78,11 @@ pub fn launch_rofi(items: &Items, config: &Config) -> anyhow::Result<Option<Stri
 }
 
 pub fn launch_link(s: &str, items: &Items, config: &Config) -> anyhow::Result<()> {
+    let link = items.get_link(s.trim()).ok_or(anyhow!("Invalid item"))?;
+    Command::new(config.browser_command_name.as_str())
+        .args([link])
+        .output()?;
+
     if let Some(switcher) = &config.workspace_switcher {
         if let Some(output) = switcher.exec() {
             if !output?.status.success() {
@@ -85,11 +90,6 @@ pub fn launch_link(s: &str, items: &Items, config: &Config) -> anyhow::Result<()
             }
         }
     }
-
-    let link = items.get_link(s.trim()).ok_or(anyhow!("Invalid item"))?;
-    Command::new(config.browser_command_name.as_str())
-        .args([link])
-        .output()?;
 
     Ok(())
 }
