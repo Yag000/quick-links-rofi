@@ -19,6 +19,6 @@ anyhow = "1.0.97"
 clap = "4.5.31"
 clap_derive = "4.5.28"
 home = "0.5.11"
-serde = { version = "1.0.218", features = ["derive"] }
+serde = { version = "1.0.219", features = ["derive"] }
 serde_derive = "1.0.196"
 serde_yaml = "0.9.34"
