@@ -49,7 +49,7 @@ impl Items {
     pub fn get_names(&self) -> String {
         self.values.keys().fold(String::new(), |acc, x| {
             if !acc.is_empty() {
-                format!("{acc}\n{}", x)
+                format!("{acc}\n{x}")
             } else {
                 String::from(x)
             }
