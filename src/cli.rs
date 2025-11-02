@@ -21,25 +21,28 @@ pub struct Cli {
 }
 
 impl Cli {
-    pub fn update_config(self, mut config: Config) -> Config {
+    pub fn update(self, config: Config) -> Config {
+        let mut new_config = config;
+
         if let Some(input_file) = self.input_file {
-            config.input_file = input_file;
+            new_config.input_file = input_file;
         }
+
         if let Some(theme_path) = self.theme_path {
-            config.theme = theme_path;
+            new_config.theme = theme_path;
         }
         if let Some(separator) = self.separator {
-            config.separator = separator;
+            new_config.separator = separator;
         }
 
         if let Some(browser) = self.browser {
-            config.browser_command_name = browser;
+            new_config.browser_command_name = browser;
         }
 
         if let Some(workspace_number) = self.i3 {
-            config.workspace_switcher = Some(I3Switcher::new(workspace_number).into())
+            new_config.workspace_switcher = Some(I3Switcher::new(workspace_number).into())
         }
 
-        config
+        new_config
     }
 }
