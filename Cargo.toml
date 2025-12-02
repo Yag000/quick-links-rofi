@@ -16,7 +16,7 @@ keywords = ["Rofi"]
 
 [dependencies]
 anyhow = "1.0.100"
-clap = "4.5.51"
+clap = "4.5.53"
 clap_derive = "4.5.49"
 home = "0.5.12"
 serde = { version = "1.0.228", features = ["derive"] }
