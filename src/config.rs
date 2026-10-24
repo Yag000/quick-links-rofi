@@ -72,7 +72,7 @@ impl Default for Config {
 }
 
 fn save_yml_config(config: &Config, path: &str) -> anyhow::Result<()> {
-    let yaml_string = serde_yaml::to_string(&config)?;
+    let yaml_string = serde_saphyr::to_string(&config)?;
 
     let mut file = File::create(path)?;
     file.write_all(yaml_string.as_bytes())?;
@@ -97,7 +97,7 @@ pub fn get_configuration() -> anyhow::Result<Config> {
         if string_value.is_empty() {
             save_default_config(config_path.as_str())
         } else {
-            Ok(serde_yaml::from_str(&string_value)?)
+            Ok(serde_saphyr::from_str(&string_value)?)
         }
     } else {
         save_default_config(config_path.as_str())
